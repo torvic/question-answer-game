@@ -14,7 +14,7 @@ public class OptionServiceImpl implements OptionService {
         optionsDB.add(option);
     }
 
-    public ArrayList<Option> getOptionsById(String questionId) {
+    public ArrayList<Option> getOptionsByQuestionId(String questionId) {
         ArrayList<Option> filteredList;
 
         filteredList = (ArrayList<Option>) optionsDB.stream()
@@ -22,6 +22,18 @@ public class OptionServiceImpl implements OptionService {
                 .collect(Collectors.toList());
 
         return filteredList;
+    }
+
+    public Option getOptionByQuestionIdAndAlternative(String questionId, Integer alternative) {
+        ArrayList<Option> options = getOptionsByQuestionId(questionId);
+
+        ArrayList<Option> filteredList;
+
+        filteredList = (ArrayList<Option>) options.stream()
+                .filter(option -> option.getAlternative().equals(alternative))
+                .collect(Collectors.toList());
+
+        return filteredList.get(0);
     }
 
     public void makeMigrations() {
